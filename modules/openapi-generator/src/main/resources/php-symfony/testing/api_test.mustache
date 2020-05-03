@@ -1,7 +1,8 @@
 <?php
 /**
  * {{classname}}Test
- * PHP version 5
+ *
+ * PHP version 7
  *
  * @category Class
  * @package  {{apiTestsPackage}}
@@ -18,11 +19,11 @@
 
 namespace {{apiTestsPackage}};
 
-use {{invokerPackage}}\Configuration;
-use {{invokerPackage}}\ApiClient;
-use {{invokerPackage}}\ApiException;
-use {{invokerPackage}}\ObjectSerializer;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Hoa\File\Read;
+use Hoa\Compiler\Llk\Llk;
+use Hoa\Regex\Visitor\Isotropic;
+use Hoa\Math\Sampler\Random;
 
 /**
  * {{classname}}Test Class Doc Comment
@@ -34,32 +35,32 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 {{#operations}}class {{classname}}Test extends WebTestCase
 {
-
     /**
      * Setup before running any test cases
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
     }
 
     /**
      * Setup before running each test case
      */
-    public function setUp()
+    public function setUp(): void
     {
     }
 
     /**
      * Clean up after running each test case
      */
-    public function tearDown()
+    public function tearDown(): void
     {
+        parent::tearDown();
     }
 
     /**
      * Clean up after running all test cases
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
     }
     {{#operation}}
@@ -105,12 +106,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
     protected function genTestData($regexp)
     {
-        $grammar  = new \Hoa\File\Read('hoa://Library/Regex/Grammar.pp');
-        $compiler = \Hoa\Compiler\Llk\Llk::load($grammar);
+        $grammar  = new Read('hoa://Library/Regex/Grammar.pp');
+        $compiler = Llk::load($grammar);
         $ast      = $compiler->parse($regexp);
-        $generator = new \Hoa\Regex\Visitor\Isotropic(new \Hoa\Math\Sampler\Random());
+        $generator = new Isotropic(new Random());
 
-        return $generator->visit($ast); 
+        return $generator->visit($ast);
     }
 }
 {{/operations}}

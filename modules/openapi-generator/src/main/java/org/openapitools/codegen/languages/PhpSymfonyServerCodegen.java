@@ -57,7 +57,7 @@ public class PhpSymfonyServerCodegen extends AbstractPhpCodegen implements Codeg
     protected String controllerPackage;
     protected String controllerTestsPackage;
     protected String servicePackage;
-    protected Boolean phpLegacySupport = Boolean.TRUE;
+    protected Boolean phpLegacySupport = Boolean.FALSE;
 
     protected HashSet<String> typeHintable;
 
@@ -201,7 +201,7 @@ public class PhpSymfonyServerCodegen extends AbstractPhpCodegen implements Codeg
                 " The template uses {{composerVendorName}}/{{composerProjectName}} for the composer package name. e.g. petstore-client"));
         cliOptions.add(new CliOption(CodegenConstants.HIDE_GENERATION_TIMESTAMP, CodegenConstants.HIDE_GENERATION_TIMESTAMP_DESC)
                 .defaultValue(Boolean.TRUE.toString()));
-        cliOptions.add(new CliOption(PHP_LEGACY_SUPPORT, "Should the generated code be compatible with PHP 5.x?").defaultValue(Boolean.TRUE.toString()));
+        cliOptions.add(new CliOption(PHP_LEGACY_SUPPORT, "Should the generated code be compatible with PHP 5.x?").defaultValue(Boolean.FALSE.toString()));
     }
 
     public String getBundleName() {
@@ -300,6 +300,7 @@ public class PhpSymfonyServerCodegen extends AbstractPhpCodegen implements Codeg
         additionalProperties.put("escapedInvokerPackage", invokerPackage.replace("\\", "\\\\"));
         additionalProperties.put("controllerPackage", controllerPackage);
         additionalProperties.put("servicePackage", servicePackage);
+        additionalProperties.put("testsPackage", testsPackage);
         additionalProperties.put("apiTestsPackage", apiTestsPackage);
         additionalProperties.put("modelTestsPackage", modelTestsPackage);
         additionalProperties.put("controllerTestsPackage", controllerTestsPackage);
@@ -340,8 +341,7 @@ public class PhpSymfonyServerCodegen extends AbstractPhpCodegen implements Codeg
         // Serialization components
         supportingFiles.add(new SupportingFile("serialization/SerializerInterface.mustache", toSrcPath(servicePackage, srcBasePath), "SerializerInterface.php"));
         supportingFiles.add(new SupportingFile("serialization/JmsSerializer.mustache", toSrcPath(servicePackage, srcBasePath), "JmsSerializer.php"));
-        supportingFiles.add(new SupportingFile("serialization/StrictJsonDeserializationVisitor.mustache", toSrcPath(servicePackage, srcBasePath), "StrictJsonDeserializationVisitor.php"));
-        supportingFiles.add(new SupportingFile("serialization/TypeMismatchException.mustache", toSrcPath(servicePackage, srcBasePath), "TypeMismatchException.php"));
+
         // Validation components
         supportingFiles.add(new SupportingFile("validation/ValidatorInterface.mustache", toSrcPath(servicePackage, srcBasePath), "ValidatorInterface.php"));
         supportingFiles.add(new SupportingFile("validation/SymfonyValidator.mustache", toSrcPath(servicePackage, srcBasePath), "SymfonyValidator.php"));
@@ -349,7 +349,7 @@ public class PhpSymfonyServerCodegen extends AbstractPhpCodegen implements Codeg
         // Testing components
         supportingFiles.add(new SupportingFile("testing/phpunit.xml.mustache", "", "phpunit.xml.dist"));
         supportingFiles.add(new SupportingFile("testing/pom.xml", "", "pom.xml"));
-        supportingFiles.add(new SupportingFile("testing/AppKernel.php", toSrcPath(testsPackage, srcBasePath), "AppKernel.php"));
+        supportingFiles.add(new SupportingFile("testing/AppKernel.mustache", toSrcPath(testsPackage, srcBasePath), "AppKernel.php"));
         supportingFiles.add(new SupportingFile("testing/ControllerTest.mustache", toSrcPath(controllerTestsPackage, srcBasePath), "ControllerTest.php"));
         supportingFiles.add(new SupportingFile("testing/test_config.yml", toSrcPath(testsPackage, srcBasePath), "test_config.yml"));
 
