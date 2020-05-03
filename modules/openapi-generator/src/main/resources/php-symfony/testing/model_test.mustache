@@ -4,7 +4,7 @@
 /**
  * {{classname}}Test
  *
- * PHP version 5
+ * PHP version 7
  *
  * @category Class
  * @package  {{modelTestsPackage}}
@@ -19,7 +19,10 @@
  * Please update the test case below to test the model.
  */
 
-namespace {{modelPackage}};
+namespace {{modelTestsPackage}};
+
+use PHPUnit\Framework\TestCase;
+use {{modelPackage}}\{{classname}};
 
 /**
  * {{classname}}Test Class Doc Comment
@@ -31,34 +34,34 @@ namespace {{modelPackage}};
  * @author      openapi-generator contributors
  * @link        https://github.com/openapitools/openapi-generator
  */
-class {{classname}}Test extends \PHPUnit_Framework_TestCase
+class {{classname}}Test extends TestCase
 {
 
     /**
      * Setup before running any test case
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
     }
 
     /**
      * Setup before running each test case
      */
-    public function setUp()
+    public function setUp(): void
     {
     }
 
     /**
      * Clean up after running each test case
      */
-    public function tearDown()
+    public function tearDown(): void
     {
     }
 
     /**
      * Clean up after running all test cases
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
     }
 
