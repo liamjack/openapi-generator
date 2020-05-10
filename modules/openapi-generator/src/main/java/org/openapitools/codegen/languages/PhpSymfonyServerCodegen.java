@@ -359,6 +359,7 @@ public class PhpSymfonyServerCodegen extends AbstractPhpCodegen implements Codeg
         supportingFiles.add(new SupportingFile("autoload.mustache", "", "autoload.php"));
         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
 
+        supportingFiles.add(new SupportingFile(".gitlab-ci.yml", "", ".gitlab-ci.yml"));
         supportingFiles.add(new SupportingFile(".travis.yml", "", ".travis.yml"));
         supportingFiles.add(new SupportingFile(".php_cs", "", ".php_cs"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));

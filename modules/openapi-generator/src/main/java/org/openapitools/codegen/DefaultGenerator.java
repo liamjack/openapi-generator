@@ -301,8 +301,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
 
             if (generateModelTests) {
                 // do not overwrite test file that already exists (regardless of config's skipOverwrite setting)
-                if (new File(filename).exists()) {
-                    LOGGER.info("File exists. Skipped overwriting {}", filename);
+                if (!config.shouldOverwrite(filename)) {
+                    LOGGER.info("Skipped overwriting {}", filename);
                     if (dryRun) {
                         dryRunStatusMap.put(filename,
                                 new DryRunStatus(
@@ -658,8 +658,8 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     File apiTestFile = new File(filename);
                     if (generateApiTests) {
                         // do not overwrite test file that already exists
-                        if (apiTestFile.exists()) {
-                            LOGGER.info("File exists. Skipped overwriting {}", filename);
+                        if (!config.shouldOverwrite(filename)) {
+                            LOGGER.info("Skipped overwriting {}", filename);
                             if (dryRun) {
                                 dryRunStatusMap.put(filename, new DryRunStatus(apiTestFile.toPath(), DryRunStatus.State.SkippedOverwrite));
                             }

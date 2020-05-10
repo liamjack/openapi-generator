@@ -12,9 +12,11 @@ class {{classname}}{{#parentSchema}} extends {{{parent}}}{{/parentSchema}}
         parent::__construct($data);
 
         {{/parentSchema}}
-        {{#vars}}
-        $this->{{name}} = isset($data['{{name}}']) ? $data['{{name}}'] : {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}};
-        {{/vars}}
+        if ($data !== null) {
+            {{#vars}}
+            $this->{{name}} = {{#required}}$data['{{name}}']{{/required}}{{^required}}isset($data['{{name}}']) ? $data['{{name}}'] : {{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}};
+            {{/vars}}
+        }
     }
     {{#vars}}
 

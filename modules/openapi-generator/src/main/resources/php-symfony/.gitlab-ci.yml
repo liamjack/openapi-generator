@@ -1,0 +1,12 @@
+image: composer:latest
+
+cache:
+  paths:
+    - vendor/
+
+before_script:
+  - composer install
+
+test:
+  script:
+    - vendor/bin/phpunit --coverage-text --colors=never
